@@ -506,8 +506,516 @@ img, svg { max-width: 100%; }
 .callout-text a { color: var(--teal); }
 
 /* ==========================================================================
-   Footer
+   Status banner — same component as Extingo
    ========================================================================== */
+.status-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow-panel);
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+.status-led {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 10px var(--teal);
+  flex-shrink: 0;
+}
+
+.status-copy { display: flex; flex-direction: column; gap: 2px; }
+
+.status-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.status-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 0.06em;
+}
+
+.status-detail {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-left: auto;
+  text-align: right;
+}
+
+.status-normal .status-led { background: var(--teal); box-shadow: 0 0 10px var(--teal); }
+.status-normal .status-value { color: var(--teal); }
+
+.status-warning { border-color: var(--amber-dim); }
+.status-warning .status-led { background: var(--amber); box-shadow: 0 0 10px var(--amber); }
+.status-warning .status-value { color: var(--amber); }
+
+.status-emergency {
+  border-color: var(--red);
+  background: linear-gradient(180deg, rgba(255,71,87,0.10), rgba(255,71,87,0.02));
+  animation: emergency-pulse 1.4s ease-in-out infinite;
+}
+.status-emergency .status-led { background: var(--red); box-shadow: 0 0 14px var(--red); }
+.status-emergency .status-value { color: var(--red); }
+
+@keyframes emergency-pulse {
+  0%, 100% { box-shadow: 0 0 0 rgba(255,71,87,0); }
+  50% { box-shadow: 0 0 26px rgba(255,71,87,0.28); }
+}
+
+/* ==========================================================================
+   Tank / street cross-section visual
+   ========================================================================== */
+.tank-panel {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: var(--shadow-panel);
+  align-items: stretch;
+}
+
+.tank-shell {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.tank-ref-label {
+  position: absolute;
+  left: 8px;
+  bottom: 6px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  z-index: 3;
+}
+
+.tank-threshold {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 2px dashed var(--amber);
+  z-index: 2;
+}
+
+.tank-threshold-label {
+  position: absolute;
+  top: -18px;
+  right: 8px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  color: var(--amber);
+  white-space: nowrap;
+}
+
+.tank-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 8%;
+  background: linear-gradient(180deg, var(--teal), #1c9c86);
+  transition: height 0.4s linear, background 0.6s ease;
+  z-index: 1;
+}
+
+.tank-fill::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: inherit;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  opacity: 0.9;
+}
+
+.tank-fill[data-state="warning"] { background: linear-gradient(180deg, var(--amber), #b3691a); }
+.tank-fill[data-state="emergency"] { background: linear-gradient(180deg, var(--red), #a52530); }
+
+.tank-level-tag {
+  position: absolute;
+  right: 8px;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--bg);
+  background: var(--text);
+  border-radius: 3px;
+  padding: 2px 6px;
+  z-index: 3;
+  transition: bottom 0.4s linear;
+}
+
+.tank-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  justify-content: space-between;
+}
+
+.readout-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+}
+
+.readout-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.readout-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.readout-value {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--text);
+}
+.readout-value .readout-unit {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-faint);
+  font-weight: 400;
+  margin-left: 4px;
+}
+.readout-card[data-state="warning"] .readout-value { color: var(--amber); }
+.readout-card[data-state="emergency"] .readout-value { color: var(--red); }
+.readout-card[data-state="normal"] .readout-value { color: var(--teal); }
+
+/* ==========================================================================
+   Scenario controls
+   ========================================================================== */
+.scenario-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.scenario-btn {
+  all: unset;
+  cursor: pointer;
+  box-sizing: border-box;
+  flex: 1 1 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.scenario-btn:hover { border-color: var(--text-dim); }
+.scenario-btn:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+.scenario-btn-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text);
+}
+.scenario-btn-note {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--text-faint);
+}
+
+.scenario-btn[data-scenario="light"][data-active="true"] {
+  border-color: var(--teal);
+  background: rgba(53, 224, 196, 0.08);
+}
+.scenario-btn[data-scenario="light"][data-active="true"] .scenario-btn-title { color: var(--teal); }
+
+.scenario-btn[data-scenario="heavy"][data-active="true"] {
+  border-color: var(--amber);
+  background: rgba(255, 157, 46, 0.08);
+}
+.scenario-btn[data-scenario="heavy"][data-active="true"] .scenario-btn-title { color: var(--amber); }
+
+.scenario-btn[data-scenario="flash"][data-active="true"] {
+  border-color: var(--red);
+  background: rgba(255, 71, 87, 0.08);
+}
+.scenario-btn[data-scenario="flash"][data-active="true"] .scenario-btn-title { color: var(--red); }
+
+.demo-controls-foot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.demo-controls-hint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+/* ==========================================================================
+   Alert overlay — shared Kavach component, exactly as in Extingo
+   ========================================================================== */
+.ext-alert-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 3, 2, 0.72);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.ext-alert-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ext-alert-card {
+  background: var(--surface);
+  border: 1px solid var(--red);
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(255,71,87,0.15), 0 20px 60px rgba(0,0,0,0.6);
+  padding: 36px 40px;
+  max-width: 420px;
+  width: calc(100% - 48px);
+  text-align: center;
+  transform: scale(0.92) translateY(8px);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.ext-alert-overlay.is-visible .ext-alert-card {
+  transform: scale(1) translateY(0);
+}
+
+.ext-alert-icon {
+  font-size: 3.2rem;
+  line-height: 1;
+  margin-bottom: 10px;
+  animation: ext-alert-pulse 0.8s ease-in-out infinite alternate;
+}
+@keyframes ext-alert-pulse {
+  from { transform: scale(1); filter: drop-shadow(0 0 4px rgba(255,71,87,0.4)); }
+  to   { transform: scale(1.15); filter: drop-shadow(0 0 16px rgba(255,71,87,0.85)); }
+}
+
+.ext-alert-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--red);
+  margin: 0 0 8px;
+}
+
+.ext-alert-detail {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-dim);
+  margin: 0 0 22px;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.ext-alert-ack {
+  all: unset;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.05em;
+  color: #0a0c0e;
+  background: linear-gradient(135deg, var(--red), #ff6b6b);
+  padding: 12px 32px;
+  border-radius: 6px;
+  transition: filter 0.2s ease;
+}
+.ext-alert-ack:hover { filter: brightness(1.1); }
+.ext-alert-ack:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ext-alert-icon { animation: none; }
+  .ext-alert-card { transition: none; }
+  .status-emergency { animation: none; }
+  .tank-fill, .tank-level-tag { transition: none; }
+}
+
+@media (max-width: 760px) {
+  .tank-panel { grid-template-columns: 1fr; }
+  .tank-shell { height: 260px; }
+}
+
+
+/* ==========================================================================
+   Documents page
+   ========================================================================== */
+.page-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+.page-intro .panel-title { font-size: 24px; }
+.page-intro-note {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+.doc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.doc-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-panel);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.doc-card-head {
+  padding: 16px 18px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.doc-card-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.doc-card-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.doc-card-desc {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.4;
+  margin: 2px 0 0;
+}
+
+.doc-preview-wrap {
+  position: relative;
+  height: 220px;
+  background: var(--surface-2);
+  border-top: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.doc-preview-wrap iframe,
+.doc-preview-wrap video {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  background: #0d1011;
+  position: relative;
+  z-index: 1;
+}
+
+.doc-preview-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.doc-card-foot {
+  padding: 12px 18px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.doc-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-faint);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 2px 6px;
+  letter-spacing: 0.04em;
+}
+
+.doc-download {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: #0a0c0e;
+  background: linear-gradient(135deg, var(--amber), #ff7a2e);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  transition: filter 0.2s ease;
+}
+.doc-download:hover { filter: brightness(1.08); }
+.doc-download:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+.doc-download-icon { font-size: 12px; }
+
 .site-footer {
   text-align: center;
   padding: 20px;
