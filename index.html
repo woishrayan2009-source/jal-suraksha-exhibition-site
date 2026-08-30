@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jal Suraksha — Flood &amp; Water-Level Early-Warning</title>
+<meta name="description" content="Jal Suraksha — hyper-local flood and water-level early-warning, part of the Kavach Unified Safety Command Grid.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div class="brand-text">
+        <span class="brand-name">JAL SURAKSHA</span>
+        <span class="brand-sub">Flood &amp; Water-Level Early-Warning</span>
+      </div>
+    </div>
+    <nav class="site-nav" aria-label="Primary">
+      <a class="site-nav-link is-active" href="index.html">Overview</a>
+      <a class="site-nav-link" href="tank-demo.html">Tank Demo</a>
+      <a class="site-nav-link" href="documents.html">Documents</a>
+    </nav>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Kavach Module 06</span>
+        <span class="meta-value">Flood / Waterlogging</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="hazard-rule" role="presentation"></div>
+
+  <main class="page">
+
+    <section class="hero">
+      <span class="demo-mode-badge is-concept" role="note">
+        <span class="demo-mode-dot" aria-hidden="true"></span>
+        Concept &amp; Design Only — No Hardware Built Yet
+      </span>
+
+      <span class="hero-eyebrow">Kavach Module 06</span>
+      <h1 class="hero-title">Know the water is rising — <em>before</em> it reaches your door.</h1>
+      <p class="hero-pitch">
+        A street-level ultrasonic sensor watches a single reference point — a drain, a basement
+        step, a low-lying stretch of road — and alerts the household long before the water gets there,
+        closing the gap that river-basin-scale flood forecasting was never built to cover.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="tank-demo.html">View Live Tank Demo →</a>
+        <a class="btn btn-ghost" href="documents.html">Read the Documents</a>
+      </div>
+
+      <div class="hero-visual">
+        <svg class="hero-gauge" viewBox="0 0 96 140" role="img" aria-label="Water level gauge showing current level below the critical threshold">
+          <rect x="28" y="6" width="40" height="128" rx="6" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1.5" />
+          <line x1="28" y1="46" x2="68" y2="46" stroke="var(--amber)" stroke-width="1.5" stroke-dasharray="4 3" />
+          <text x="72" y="49" class="gauge-scale-label" font-family="IBM Plex Mono, monospace" font-size="8" fill="var(--amber)">CRIT</text>
+          <rect x="28" y="82" width="40" height="52" rx="6" fill="var(--teal)" opacity="0.85" />
+          <line x1="28" y1="82" x2="68" y2="82" stroke="var(--teal)" stroke-width="2" />
+          <text x="8" y="86" class="gauge-scale-label" font-family="IBM Plex Mono, monospace" font-size="8" fill="var(--text-faint)">NOW</text>
+        </svg>
+        <div class="hero-visual-copy">
+          <span class="hero-visual-label">Reference Point · Drain Entrance</span>
+          <span class="hero-visual-value">31 cm below threshold</span>
+          <span class="hero-visual-note">Rate-of-rise is recalculated on every reading, the same pattern used for Extingo's heat sensor.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="problem-title">
+      <div class="panel-head">
+        <span class="panel-eyebrow">THE PROBLEM</span>
+      </div>
+      <h2 class="panel-title" id="problem-title" style="font-size:26px;">National forecasting knows the river. Nobody watches your drain.</h2>
+      <p class="section-copy">
+        India's flood-forecasting systems operate at <strong>river-basin scale</strong> — they can tell a
+        district that a river will crest in the next day, but they were never designed to sense that
+        <strong>one specific street, basement, or underpass</strong> is waterlogging right now. That gap is
+        where sudden, localized flooding actually catches people unaware: the water rises street by street,
+        hours or even minutes before it becomes a basin-wide event anyone official is tracking.
+      </p>
+      <div class="section-stat-row">
+        <div class="stat-chip">
+          <span class="stat-chip-value">Basin</span>
+          <span class="stat-chip-label">Scale of national forecasting</span>
+        </div>
+        <div class="stat-chip">
+          <span class="stat-chip-value">Street</span>
+          <span class="stat-chip-label">Scale at which flooding is actually felt</span>
+        </div>
+        <div class="stat-chip">
+          <span class="stat-chip-value">0</span>
+          <span class="stat-chip-label">Local sensors at most drains &amp; basements today</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="how-it-works-title">
+      <div class="panel-head">
+        <span class="panel-eyebrow">HOW IT WORKS</span>
+      </div>
+      <h2 class="panel-title" id="how-it-works-title" style="font-size:26px;">One reference point, three steps, one alert</h2>
+      <div class="steps-grid">
+        <article class="step-card">
+          <span class="step-index">STEP 01</span>
+          <span class="step-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M7 6l5-4 5 4M7 18l5 4 5-4"/></svg>
+          </span>
+          <h3 class="step-title">Measure Water Level Continuously</h3>
+          <p class="step-desc">An ultrasonic sensor mounted above a fixed reference height — a drain, a basement entrance, a low road point — takes a distance reading on a steady interval, day and night.</p>
+        </article>
+        <article class="step-card">
+          <span class="step-index">STEP 02</span>
+          <span class="step-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-5 4 4 8-8M14 8h6v6"/></svg>
+          </span>
+          <h3 class="step-title">Calculate Rate-of-Rise</h3>
+          <p class="step-desc">Each new reading is compared against recent history to compute how fast the level is climbing, not just how high it is — the same rate-of-rise logic Extingo already uses for its heat sensor.</p>
+        </article>
+        <article class="step-card">
+          <span class="step-index">STEP 03</span>
+          <span class="step-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+          </span>
+          <h3 class="step-title">Alert Before Critical Threshold</h3>
+          <p class="step-desc">When the projected rise crosses the safety threshold before it's actually reached, a local alarm fires and an SMS goes out — reported into the Kavach dashboard the same way every other module escalates.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="callout-title">
+      <div class="callout-box">
+        <span class="callout-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6M3 12a9 9 0 0115-6.7L21 8M3 22v-6h6M21 12a9 9 0 01-15 6.7L3 16"/></svg>
+        </span>
+        <div class="callout-copy">
+          <span class="callout-title" id="callout-title">Same Algorithm, New Hazard</span>
+          <p class="callout-text">
+            Jal Suraksha doesn't introduce a new detection concept — it reapplies one. The rate-of-rise
+            calculation that lets <a href="#">Extingo</a> flag a fire before the temperature alone would
+            trigger an alarm is the exact same pattern used here on a water-level reading instead of a
+            heat reading. One idea, now proven across two hazards, is the thread that runs through Kavach.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>Jal Suraksha — a Kavach module · Concept &amp; design only, no hardware build</span>
+  </footer>
+
+</body>
+</html>
