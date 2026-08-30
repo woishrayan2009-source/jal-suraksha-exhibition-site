@@ -1,1 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jal Suraksha — Tank Demo</title>
+<meta name="description" content="Interactive water-level tank simulator for Jal Suraksha, the flood early-warning module of the Kavach Unified Safety Command Grid.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div class="brand-text">
+        <span class="brand-name">JAL SURAKSHA</span>
+        <span class="brand-sub">Flood &amp; Water-Level Early-Warning</span>
+      </div>
+    </div>
+    <nav class="site-nav" aria-label="Primary">
+      <a class="site-nav-link" href="index.html">Overview</a>
+      <a class="site-nav-link is-active" href="tank-demo.html">Tank Demo</a>
+      <a class="site-nav-link" href="documents.html">Documents</a>
+    </nav>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Kavach Module 06</span>
+        <span class="meta-value">Flood / Waterlogging</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="hazard-rule" role="presentation"></div>
+
+  <main class="page">
+
+    <section class="section">
+      <span class="demo-mode-badge" role="note">
+        <span class="demo-mode-dot" aria-hidden="true"></span>
+        Simulated Water Level — Conceptual Demonstration, Not Connected to a Real Sensor
+      </span>
+
+      <div class="panel-head">
+        <span class="panel-eyebrow">LIVE DEMO</span>
+      </div>
+      <h1 class="panel-title" style="font-size:26px;">Water-Level Tank Simulator</h1>
+      <p class="section-copy">
+        Pick a rain scenario and watch the same rate-of-rise calculation described on the
+        <a href="index.html" style="color:var(--teal);">overview page</a> run against a simulated
+        reading stream. Light and heavy rain stay within safe and cautionary territory; a flash flood
+        crosses the danger threshold fast enough to trigger the full Kavach alert cascade.
+      </p>
+    </section>
+
+    <section class="status-banner status-normal" id="status-banner" aria-live="polite">
+      <span class="status-led" aria-hidden="true"></span>
+      <div class="status-copy">
+        <span class="status-label">System Status</span>
+        <span class="status-value" id="status-text">NORMAL</span>
+      </div>
+      <span class="status-detail" id="status-detail">Water level within safe range</span>
+    </section>
+
+    <section class="tank-panel" aria-label="Tank visual and live readouts">
+      <div class="tank-shell">
+        <span class="tank-ref-label">Reference · Drain Entrance</span>
+        <div class="tank-threshold" id="tank-threshold" style="bottom: 70%;">
+          <span class="tank-threshold-label">DANGER THRESHOLD · 70 CM</span>
+        </div>
+        <span class="tank-level-tag" id="tank-level-tag" style="bottom: 8%;">8 cm</span>
+        <div class="tank-fill" id="tank-fill" data-state="normal" style="height: 8%;"></div>
+      </div>
+
+      <div class="tank-meta">
+        <div class="readout-row">
+          <div class="readout-card" id="readout-level" data-state="normal">
+            <span class="readout-label">Current Level</span>
+            <span class="readout-value"><span id="level-value">8</span><span class="readout-unit">cm</span></span>
+          </div>
+          <div class="readout-card" id="readout-rate" data-state="normal">
+            <span class="readout-label">Rate-of-Rise</span>
+            <span class="readout-value"><span id="rate-value">0.0</span><span class="readout-unit">cm/min</span></span>
+          </div>
+        </div>
+
+        <div>
+          <span class="hero-visual-label" style="display:block; margin-bottom:8px;">Rain Scenario</span>
+          <div class="scenario-row">
+            <button type="button" class="scenario-btn" data-scenario="light" data-active="false">
+              <span class="scenario-btn-title">Light Rain</span>
+              <span class="scenario-btn-note">Rises very slowly · no alert</span>
+            </button>
+            <button type="button" class="scenario-btn" data-scenario="heavy" data-active="false">
+              <span class="scenario-btn-title">Heavy Rain</span>
+              <span class="scenario-btn-note">Moderate rise · caution state</span>
+            </button>
+            <button type="button" class="scenario-btn" data-scenario="flash" data-active="false">
+              <span class="scenario-btn-title">Flash Flood</span>
+              <span class="scenario-btn-note">Rapid rise · triggers alert</span>
+            </button>
+          </div>
+          <div class="demo-controls-foot">
+            <button type="button" class="btn btn-ghost" id="reset-demo">Reset</button>
+            <span class="demo-controls-hint" id="scenario-hint">Choose a scenario to start the simulated reading stream.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>Jal Suraksha — a Kavach module · Simulated readings, no hardware build</span>
+  </footer>
+
+  <div class="ext-alert-overlay" id="alert-overlay" role="alertdialog" aria-modal="true" aria-labelledby="alert-title" aria-describedby="alert-detail">
+    <div class="ext-alert-card">
+      <div class="ext-alert-icon" aria-hidden="true">🌊</div>
+      <h2 class="ext-alert-title" id="alert-title">CRITICAL — RAPID RISE DETECTED</h2>
+      <p class="ext-alert-detail" id="alert-detail"></p>
+      <button type="button" class="ext-alert-ack" id="alert-ack">Acknowledge</button>
+    </div>
+  </div>
+
+  <script src="js/tank-demo.js"></script>
+</body>
+</html>
